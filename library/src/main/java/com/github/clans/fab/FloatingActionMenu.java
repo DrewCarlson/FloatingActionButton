@@ -4,6 +4,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -335,6 +336,19 @@ public class FloatingActionMenu extends ViewGroup {
 
         if (getLayoutParams().height == LayoutParams.MATCH_PARENT) {
             height = getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec);
+        }
+
+        if (getTranslationY() == 0) {
+            final Resources r = getResources();
+            final View fab = getChildAt(getChildCount() - 1);
+            final MarginLayoutParams lp = (MarginLayoutParams) getLayoutParams();
+
+            float offset = (getMeasuredHeight() - fab.getMeasuredHeight());
+            float extras = lp.bottomMargin - mMenuShadowRadius - mMenuShadowYOffset - 10;
+
+            offset += TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, extras, r.getDisplayMetrics());
+
+            setTranslationY(offset);
         }
 
         setMeasuredDimension(width, height);
