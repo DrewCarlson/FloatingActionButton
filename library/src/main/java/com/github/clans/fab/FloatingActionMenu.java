@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -74,7 +73,7 @@ public class FloatingActionMenu extends ViewGroup {
     private int mMenuColorNormal;
     private int mMenuColorPressed;
     private int mMenuColorRipple;
-    private Drawable mIcon;
+    private int mIconResource;
     private int mAnimationDelayPerItem;
     private Interpolator mOpenInterpolator;
     private Interpolator mCloseInterpolator;
@@ -148,10 +147,7 @@ public class FloatingActionMenu extends ViewGroup {
         mMenuColorPressed = attr.getColor(R.styleable.FloatingActionMenu_menu_colorPressed, 0xFFE75043);
         mMenuColorRipple = attr.getColor(R.styleable.FloatingActionMenu_menu_colorRipple, 0x99FFFFFF);
         mAnimationDelayPerItem = attr.getInt(R.styleable.FloatingActionMenu_menu_animationDelayPerItem, 50);
-        mIcon = attr.getDrawable(R.styleable.FloatingActionMenu_menu_icon);
-        if (mIcon == null) {
-            mIcon = getResources().getDrawable(R.drawable.fab_add);
-        }
+        mIconResource = attr.getResourceId(R.styleable.FloatingActionMenu_menu_icon, R.drawable.fab_add);
         mLabelsSingleLine = attr.getBoolean(R.styleable.FloatingActionMenu_menu_labels_singleLine, false);
         mLabelsEllipsize = attr.getInt(R.styleable.FloatingActionMenu_menu_labels_ellipsize, 0);
         mLabelsMaxLines = attr.getInt(R.styleable.FloatingActionMenu_menu_labels_maxLines, -1);
@@ -245,7 +241,7 @@ public class FloatingActionMenu extends ViewGroup {
         mMenuButton.setLabelText(mMenuLabelText);
 
         mImageToggle = new ImageView(getContext());
-        mImageToggle.setImageDrawable(mIcon);
+        mImageToggle.setImageResource(mIconResource);
 
         addView(mMenuButton, super.generateDefaultLayoutParams());
         addView(mImageToggle);
